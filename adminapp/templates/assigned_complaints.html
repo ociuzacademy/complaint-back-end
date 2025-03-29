@@ -1,0 +1,48 @@
+{% extends 'admin_index.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Assigned Complaints</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Category</th>
+                <th>Assigned Officer</th>
+                <th>Status</th>
+                <th>Proof of Work</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for complaint in complaints %}
+            <tr>
+                <td>{{ complaint.id }}</td>
+                <td>{{ complaint.user.fullname }}</td>
+                <td>{{ complaint.phone }}</td>
+                <td>{{ complaint.address }}</td>
+                <td>{{ complaint.category.name }}</td>
+                <td>{{ complaint.assigned_officer.Fullname }}</td>
+                <td>{{ complaint.status_code }}</td>
+                <td>
+                    {% if complaint.proof_of_work %}
+                        {% if complaint.proof_of_work.url|lower|slice:"-4:" == ".jpg" or complaint.proof_of_work.url|lower|slice:"-4:" == ".png" %}
+                            <img src="{{ complaint.proof_of_work.url }}" alt="Proof of Work" width="50">
+                        {% elif complaint.proof_of_work.url|lower|slice:"-4:" == ".pdf" %}
+                            <a href="{{ complaint.proof_of_work.url }}" target="_blank">View PDF</a>
+                        {% else %}
+                            <a href="{{ complaint.proof_of_work.url }}" target="_blank">Download File</a>
+                        {% endif %}
+                    {% else %}
+                        No Proof Uploaded
+                    {% endif %}
+                </td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

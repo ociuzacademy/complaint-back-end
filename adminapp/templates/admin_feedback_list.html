@@ -1,0 +1,33 @@
+{% extends 'admin_index.html' %}
+
+{% block content %}
+<h2>Feedback List</h2>
+
+<table style="width: 100%; border-collapse: collapse; text-align: left;">
+    <thead>
+        <tr style="background-color: #f2f2f2;">
+            <th style="border: 1px solid #ddd; padding: 8px;">ID</th>
+            <th style="border: 1px solid #ddd; padding: 8px;">User</th>
+            <th style="border: 1px solid #ddd; padding: 8px;">Rate</th>
+            <th style="border: 1px solid #ddd; padding: 8px;">Feedback</th>
+            <th style="border: 1px solid #ddd; padding: 8px;">Submitted At</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for feedback in feedbacks %}
+        <tr>
+            <td style="border: 1px solid #ddd; padding: 8px;">{{ feedback.id }}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">{{ feedback.user.name }}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">{{ feedback.rate }}/5</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">{{ feedback.feedback }}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">{{ feedback.created_at }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" style="border: 1px solid #ddd; padding: 8px; text-align: center;">No feedback available.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

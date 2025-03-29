@@ -1,0 +1,37 @@
+{% extends 'admin_index.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Registered Users</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center align-middle" style="width: 100%;" border="1">
+            <thead class="table-dark">
+                <tr>
+                    <th style="width: 30%;">Full Name</th>
+                    <th style="width: 40%;">Email</th>
+                    <th style="width: 30%;">Profile Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr style="height: 60px;">
+                    <td>{{ user.fullname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% if user.profile %}
+                            <img src="{{ user.profile.url }}" alt="Profile Image" class="img-thumbnail" width="50" height="50" style="object-fit: cover;">
+                        {% else %}
+                            No Image
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="text-center">No users found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'admin_index.html' %}
+
+{% block content %}
+<header style="text-align: center;">
+    <h1>Add Officer</h1>
+</header>
+<div class="content">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table border="1" cellpadding="10" cellspacing="0">
+            <tr>
+                <td><label for="fullname">Fullname:</label></td>
+                <td><input type="text" id="fullname" name="Fullname" required></td>
+            </tr>
+            <tr>
+                <td><label for="email">Email:</label></td>
+                <td><input type="email" id="email" name="Email" required></td>
+            </tr>
+            <tr>
+                <td><label for="password">Password:</label></td>
+                <td><input type="password" id="password" name="Password" required></td>
+            </tr>
+            <tr>
+                <td><label for="phone">Phone:</label></td>
+                <td><input type="text" id="phone" name="Phone" required></td>
+            </tr>
+            <tr>
+                <td><label for="gender">Gender:</label></td>
+                <td>
+                    <select id="gender" name="Gender" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="id_card">ID Card:</label></td>
+                <td><input type="file" id="id_card" name="id_card"></td>
+            </tr>
+            <tr>
+                <td><label for="officer_id">Officer ID:</label></td>
+                <td><input type="text" id="officer_id" name="officer_id" required></td>
+            </tr>
+            <tr>
+                <td><label for="profile">Profile Picture:</label></td>
+                <td><input type="file" id="profile" name="profile"></td>
+            </tr>
+            <tr>
+                <td><label for="category">Category:</label></td>
+                <td>
+                    <select id="category" name="category" required>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            
+            <tr>
+                <td colspan="2" align="center">
+                    <button type="submit">Add Officer</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+{% endblock %}

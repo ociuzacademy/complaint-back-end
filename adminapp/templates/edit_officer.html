@@ -1,0 +1,15 @@
+{% extends 'admin_index.html' %}
+
+{% block content %}
+<body>
+    <h1>Edit Password for {{ officer.Fullname }}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="password">New Password:</label>
+        <input type="password" name="password" id="password" required>
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'list_officers' %}">Back to Officer List</a>
+
+{% endblock %}
+

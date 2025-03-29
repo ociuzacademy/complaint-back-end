@@ -1,0 +1,74 @@
+{% extends 'admin_index.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>All Complaints</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Aadhaar Photo</th>
+                <th>Incident Date</th>
+                <th>Photo</th>
+                <th>Description</th>
+                <th>Assign Officer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for complaint in complaints %}
+            <tr>
+                <td>{{ complaint.id }}</td>
+                <td>{{ complaint.user.fullname }}</td>
+                <td>{{ complaint.phone }}</td>
+                <td>{{ complaint.address }}</td>
+                <td>{{ complaint.city }}</td>
+                <td>{{ complaint.latitude }}</td>
+                <td>{{ complaint.longitude }}</td>
+                <td>{{ complaint.category.name }}</td>
+                <td>{{ complaint.status_code }}</td>
+                <td>
+                    {% if complaint.aadhaar_photo %}
+                        <img src="{{ complaint.aadhaar_photo.url }}" alt="Aadhaar Photo" width="50">
+                    {% else %}
+                        No Aadhaar Photo
+                    {% endif %}
+                </td>
+                <td>{{ complaint.date_of_incident }}</td>
+                <td>
+                    {% if complaint.photo %}
+                        <img src="{{ complaint.photo.url }}" alt="Complaint Photo" width="50">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+                <td>{{ complaint.description }}</td>
+                <td>
+                    <form method="post" action="{% url 'assign_officer' complaint.id %}">
+                        {% csrf_token %}
+                        <select name="officer_id">
+                            <option value="">Select Officer</option>
+                            {% for officer in officers %}
+                                {% if officer.category == complaint.category %}
+                                    <option value="{{ officer.id }}" {% if complaint.assigned_officer == officer %}selected{% endif %}>
+                                        {{ officer.Fullname }}
+                                    </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <button type="submit">Assign</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
