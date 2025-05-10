@@ -14,19 +14,10 @@ class loginSerializers(serializers.ModelSerializer):
         model = userreg
         fields = ['email', 'password']
 
-from rest_framework import serializers
-from .models import Complaints
-
 class ComplaintSerializer(serializers.ModelSerializer):
-    category_name = serializers.CharField(source='category.name', read_only=True)
-
     class Meta:
         model = Complaints
-        fields = [
-            'id', 'name', 'email', 'phone', 'address', 'city', 'latitude', 'longitude', 
-            'photo', 'description', 'status_code', 'created_at', 'aadhaar_photo', 
-            'date_of_incident', 'proof_of_work', 'user', 'category_name', 'assigned_officer'
-        ]
+        fields = '__all__'  # ✅ Includes name, email, and all other fields
 
 
 from rest_framework import serializers
@@ -44,3 +35,18 @@ class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feedback
         fields = ['id', 'user', 'rate', 'feedback','created_at']
+
+
+from rest_framework import serializers
+from .models import Complaints
+
+class ComplaintDetailSerializer(serializers.ModelSerializer):
+    category_label = serializers.CharField(source='category.name', read_only=True)  # ✅ Using 'category_label' instead of 'category_name'
+
+    class Meta:
+        model = Complaints
+        fields = [
+            'id', 'name', 'email', 'phone', 'address', 'city', 'latitude', 'longitude',
+            'photo', 'description', 'status_code', 'created_at', 'aadhaar_photo',
+            'date_of_incident', 'proof_of_work', 'user', 'category_label', 'assigned_officer'
+        ]  # ✅ 'category' replaced with 'category_label'

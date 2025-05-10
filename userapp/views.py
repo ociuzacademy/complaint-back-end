@@ -61,7 +61,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from .models import Complaints
-from .serializers import ComplaintSerializer
+from .serializers import ComplaintSerializer,ComplaintDetailSerializer
 class UserComplaintViewSet(viewsets.ModelViewSet):
     """
     ViewSet for handling user complaints.
@@ -80,7 +80,7 @@ def list_complaints_by_user(request, user_id):
     if not complaints.exists():
         return Response({"message": "No complaints found for this user."}, status=status.HTTP_404_NOT_FOUND)
 
-    serializer = ComplaintSerializer(complaints, many=True)
+    serializer = ComplaintDetailSerializer(complaints, many=True)
     return Response(serializer.data) 
 
 
